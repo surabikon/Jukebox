@@ -72,6 +72,21 @@
 	</head>
 
 	<body>
+		<section class="container topnav">
+			<center>
+				<a class="icon" href="Home.html" style="position: fixed; left: 0;"><i class="fa fa-user-circle-o">
+					<section class="container topnavtext">
+						Username
+					</section>
+				</i></a>
+				<a class="icon" href="Home.html" style="position: fixed; right: 0;"><i class="fa fa-sign-out">
+					<section class="container topnavtext">
+						Logout
+					</section>
+				</i></a>
+			</center>
+		</section>
+		
 		<section class="container header">
 			<h1>JUKEBOX</h1>
 			<h2>Create Playlist</h2>	

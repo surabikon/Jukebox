@@ -1,14 +1,14 @@
 <?php
 require("methods.php");
 $onload = "";
-$db = connect();
+$db_songs = connectSongs();
 if ($_GET["playlistName"]){
 	$pName = $_GET["playlistName"];
 }else{
-	$pName = "default";
+	$pName = "XXXXXX";
 }
 
-$songs = getSongs($db, $_GET["playlistName"]);
+$songs = getSongs($db_songs, $pName);
 if ($songs){
 	foreach ($songs as &$s){
 		$title = $s[1];
@@ -16,7 +16,7 @@ if ($songs){
 	}
 }
 
-$db->close();
+$db_songs->close();
 
 $body = <<<BODY
 <!DOCTYPE html>
@@ -94,6 +94,21 @@ $body = <<<BODY
 	</head>
 
 	<body>
+		<section class="container topnav">
+			<center>
+				<a class="icon" href="Home.html" style="position: fixed; left: 0;"><i class="fa fa-user-circle-o">
+					<section class="container topnavtext">
+						Username
+					</section>
+				</i></a>
+				<a class="icon" href="Home.html" style="position: fixed; right: 0;"><i class="fa fa-sign-out">
+					<section class="container topnavtext">
+						Logout
+					</section>
+				</i></a>
+			</center>
+		</section>
+
 		<section class="container header">
 			<h1>JUKEBOX</h1>
 			<h2>Edit Playlist - $pName</h2>
@@ -103,8 +118,8 @@ $body = <<<BODY
 			<ul>
 				<form action="/action_page.php">
 				<li>
-					<label>Party Name:</label>
-					<input type="text" placeholder="Enter Song Title">
+					<label>Playlist Name:</label>
+					<input type="text" placeholder="Enter Song Title" value=$pName>
 					<a class="icon-button" onclick="removePlaylist()">
 	                    <i class="fa fa-trash-o"></i>
 	                </a>
@@ -112,8 +127,8 @@ $body = <<<BODY
 				</form>
 				<form action="/action_page.php">
 				<li>
-					<label>URL:</label>
-					<input type="text" placeholder="Enter Youtube URL">
+					<label>Song/URL:</label>
+					<input type="text" placeholder="Enter Song Name or URL">
 					<a class="icon-button" onclick="addNewSong()">
 	                    <i class="fa fa-plus-square-o"></i>
 	            	</a>

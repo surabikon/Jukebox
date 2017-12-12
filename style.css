@@ -28,6 +28,7 @@ body {
 .container.header h1 {
 	font-size: 50px;
   font-family: 'Codystar';
+  padding-top: 5%;
 }
 
 .container.header h2 {
@@ -141,6 +142,18 @@ body {
 	color: #606060;
 }
 
+.container.topnav i {
+  font-size: 40px;
+  padding: 15px;
+  color: #606060;
+}
+
+.container.topnavtext {
+  font-family: 'Marvel';
+  font-size: 25px;
+  color: black;
+}
+
 h3 {
 	font-family: 'Marvel';
 	color: white;
@@ -159,6 +172,15 @@ p {
 	font-family: 'Lobster Two';
 	font-size: 20px;
 	color: white;
+}
+
+.container.topnav {
+  overflow: hidden;
+  background-color: #6194BC;
+  position: fixed;
+  top: 0;
+  left: -1%;
+  width: 102%;
 }
 
 .container.nav {

@@ -1,13 +1,13 @@
 <?php
 require("methods.php");
-$db = connect();
-$playlists = getPlaylists($db);
+$db_users = connectUsers();
+$playlists = getPlaylistButtons($db_users, "test");
 
-$db->close();
+$db_users->close();
 
 $top = <<<TOP
 	<!DOCTYPE html>
-	<html>	
+	<html>
 		<head>
 			<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -16,18 +16,31 @@ $top = <<<TOP
 			<link href='https://fonts.googleapis.com/css?family=Marvel' rel='stylesheet'>
 		</head>
 		<body>
+			<section class="container topnav">
+				<center>
+					<a class="icon" href="Home.html" style="position: fixed; left: 0;"><i class="fa fa-user-circle-o">
+						<section class="container topnavtext">
+							Username
+						</section>
+					</i></a>
+					<a class="icon" href="Home.html" style="position: fixed; right: 0;"><i class="fa fa-sign-out">
+						<section class="container topnavtext">
+							Logout
+						</section>
+					</i></a>
+				</center>
+			</section>
+
 			<section class="container header">
 				<h1>JUKEBOX</h1>
-				<h2>Playlist</h2>	
+				<h2>Playlist</h2>
 			</section>
 TOP;
 
 $bottom = <<<BOTTOM
 			<section class="container list item-list">
 				<ul>
-					<li>
-						<a class="item" href="Currently Playing.php">BTS 🗑<i class="fa fa-angle-right"></i></a>
-					</li>
+					$playlists
 				</ul>
 			</section>
 

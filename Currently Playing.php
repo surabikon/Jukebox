@@ -5,10 +5,10 @@ $onload = "addNewSong(songs[0]);
             addNewSong(songs[2]);
             addNewSong(songs[3]);
             addNewSong(songs[4]);";
-$db = connect();
+$db_songs = connectSongs();
 $pName = "Sample Playlist";
 
-$songs = getSongs($db, $pName);
+$songs = getSongs($db_songs, "XXXXXX");
 if ($songs){
 	foreach ($songs as &$s){
 		$title = $s[1];
@@ -16,7 +16,7 @@ if ($songs){
 	}
 }
 
-$db->close();
+$db_songs->close();
 
 $body = <<<BODY
     <!DOCTYPE html>
@@ -60,8 +60,8 @@ $body = <<<BODY
                             autoplay: ctrlq.dataset.autoplay,
                             loop: ctrlq.dataset.loop,
                             // listType: 'playlist',
-                            // list: 'PL_Cqw69_m_yzbMVGvQA8QWrL_HdVXJQX7',      //BTS           
-                            // list: 'PLnsTUgMW5W__4eI0349Lu64ljXsrRjhwJ'        
+                            // list: 'PL_Cqw69_m_yzbMVGvQA8QWrL_HdVXJQX7',      //BTS
+                            // list: 'PLnsTUgMW5W__4eI0349Lu64ljXsrRjhwJ'
                         },
                         events: {
                             'onReady': onPlayerReady,
@@ -71,7 +71,7 @@ $body = <<<BODY
                 }
 
                 function togglePlayButton(play) {
-                    document.getElementById("youtube-icon").src = play ? "stop.png" : "play.png";
+                    document.getElementById("youtube-icon").src = play ? "pause.png" : "play.png";
                 }
 
                 //    --Hide play/pause button--
@@ -101,12 +101,12 @@ $body = <<<BODY
                     // player.loadPlaylist({
                     //     listType: 'playlist',
                     //     list: 'PLnsTUgMW5W__4eI0349Lu64ljXsrRjhwJ',
-                    //     // list:['a8c5wmeOL9o', '2lzXpOF5Ssg'], 
+                    //     // list:['a8c5wmeOL9o', '2lzXpOF5Ssg'],
                     //     index: 0,
                     //     startSeconds: 0,
                     //     suggestedQuality: 'small'
                     // });
-                    
+
                     player.loadVideoById(videoList[count]);
                     player.setPlaybackQuality("small");
                     document.getElementById("youtube-audio").style.display = "inline-block";
@@ -180,11 +180,26 @@ $body = <<<BODY
         </head>
 
         <body>
+            <section class="container topnav">
+                <center>
+                    <a class="icon" href="Home.html" style="position: fixed; left: 0;"><i class="fa fa-user-circle-o">
+                        <section class="container topnavtext">
+                            Username
+                        </section>
+                    </i></a>
+                    <a class="icon" href="Home.html" style="position: fixed; right: 0;"><i class="fa fa-sign-out">
+                        <section class="container topnavtext">
+                            Logout
+                        </section>
+                    </i></a>
+                </center>
+            </section>
+
 			<section class="container header">
 				<h1>JUKEBOX</h1>
-				<h2>Currently Playing</h2>	
+				<h2>Currently Playing</h2>
 			</section>
-			
+
            	<section class="container list item-list">
                 <ul>
                     <li>
@@ -198,7 +213,7 @@ $body = <<<BODY
                 <h2>Up Next
                 <a href="#"><i class="fa fa-plus-square-o" onclick=addSong() style="color: #606060; font-size: 40px;"></i>
                 </a>
-                </h2>  
+                </h2>
             </section>
 
 			<section class="container list item-list">

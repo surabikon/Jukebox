@@ -96,12 +96,12 @@ $body = <<<BODY
 	<body>
 		<section class="container topnav">
 			<center>
-				<a class="icon" href="Home.html" style="position: fixed; left: 0;"><i class="fa fa-user-circle-o">
+				<a class="icon" style="position: fixed; left: 0;"><i class="fa fa-user-circle-o" style="color: black;">
 					<section class="container topnavtext">
 						Username
 					</section>
 				</i></a>
-				<a class="icon" href="Home.html" style="position: fixed; right: 0;"><i class="fa fa-sign-out">
+				<a class="icon" href="Login.html" style="position: fixed; right: 0;"><i class="fa fa-sign-out">
 					<section class="container topnavtext">
 						Logout
 					</section>

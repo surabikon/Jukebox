@@ -1,14 +1,34 @@
 <?php
 require("methods.php");
-$onload = "addNewSong(songs[0]);
-            addNewSong(songs[1]);
-            addNewSong(songs[2]);
-            addNewSong(songs[3]);
-            addNewSong(songs[4]);";
-$db_songs = connectSongs();
-$pName = "Sample Playlist";
 
-$songs = getSongs($db_songs, "XXXXXX");
+session_start();
+if (!isset($_SESSION['username'])) {
+	$username = "Test Username";
+} else {
+	$username = $_SESSION['username'];
+}
+
+$onload = "";
+$db_songs = connectSongs();
+
+if (isset($_GET["playlistName"])){
+	$pName = $_GET["playlistName"];
+	$top = "
+    <li>
+        <div data-video='' data-autoplay='0' data-loop='1' id='youtube-audio'></div>
+    </li>";
+	$code = "emptyparty";
+} else {
+	$pName = "Best of Kendrick Lamar";
+	$top = "
+    <li>
+		<div data-video='pCdWnY4Dn2w' data-autoplay='1' data-loop='1' id='youtube-audio'></div>
+		<span>Kendrick Lamar- DUCKWORTH.</span>
+	</li>";
+	$code = "kdot";
+}
+
+$songs = getSongs($db_songs, $pName);
 if ($songs){
 	foreach ($songs as &$s){
 		$title = $s[1];
@@ -31,16 +51,12 @@ $body = <<<BODY
             <link href='https://fonts.googleapis.com/css?family=Marvel' rel='stylesheet'>
 
             <script type="text/javascript" src="https://www.youtube.com/iframe_api"></script>
+
+    		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
             <script>
                 var count = 0;
                 var player;
-                var songs = ["BTS (防弾少年団) 'MIC Drop -Japanese ver.-' Official MV",
-                             "BTS (방탄소년단) 'DNA' Official MV",
-                             "BTS (방탄소년단) 'Not Today' Official MV",
-                             "BTS (방탄소년단) '피 땀 눈물 (Blood Sweat & Tears)' Official MV",
-                             "[MV] BTS(방탄소년단) _ FIRE (불타오르네)"
-                            ];
-                var videoList = ['a8c5wmeOL9o', '2lzXpOF5Ssg'];
+                var videoList = ['T3xwtb5Sm6E', '2lzXpOF5Ssg'];
 
                 window.onload = function(){
                     $onload
@@ -107,8 +123,19 @@ $body = <<<BODY
             	var songCount = 0;
                 function addSong(){
                     var song = prompt("Song Name or URL:", "Enter Song Name or URL");
-                    addNewSong(song);
-                }
+    				ajaxAdd(song);
+    			}
+
+    			function ajaxAdd(name){
+    				$.ajax({
+    					url: 'ajaxAdd.php',
+    			        type: 'post',
+    			        data: { songname: '' + name, roomcode: 'Best of Kendrick Lamar'},
+    					success: function(data){
+    						addNewSong(data);
+    					}
+             		});
+    			}
 
             	function addNewSong(song) {
                     if (song != null && song != "") {
@@ -167,10 +194,10 @@ $body = <<<BODY
                 <center>
                     <a class="icon" style="position: fixed; left: 0;"><i class="fa fa-user-circle-o" style="color: black;">
                         <section class="container topnavtext">
-                            Username
+                            $username
                         </section>
                     </i></a>
-                    <a class="icon" href="Login.html" style="position: fixed; right: 0;"><i class="fa fa-sign-out">
+                    <a class="icon" href="Login.php" style="position: fixed; right: 0;"><i class="fa fa-sign-out">
                         <section class="container topnavtext">
                             Logout
                         </section>
@@ -181,15 +208,12 @@ $body = <<<BODY
 			<section class="container header">
 				<h1>JUKEBOX</h1>
 				<h2>Currently Playing</h2>
-                <h2>Room Code: XXXXXX</h2>
+                <h2>Room Code: $code</h2>
 			</section>
 
            	<section class="container list item-list">
                 <ul>
-                    <li>
-                        <div data-video="pCdWnY4Dn2w" data-autoplay="1" data-loop="1" id="youtube-audio"></div>
-                        <span>BTS (防弾少年団) 'MIC Drop -Japanese ver.-' Official MV</span>
-                    </li>
+                    $top
                 </ul>
             </section>
 
@@ -209,7 +233,7 @@ $body = <<<BODY
 
             <section class="container nav">
                 <center>
-                    <a class="icon" href="Home.html"><i class="fa fa-home"></i></a>
+                    <a class="icon" href="Home.php"><i class="fa fa-home"></i></a>
                     <a class="icon" href="Manage Playlists.php"><i class="fa fa-list"></i></a>
                     <a class="icon" href="Currently Playing.php"><i class="fa fa-play" style="color: #FFFFFF;"></i></a>
                 </center>

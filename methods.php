@@ -46,18 +46,18 @@ function connectUsers(){
 //songs - creates a new empty playlist table in the songs database, named after the room code
 //playlists - inserts a playlist into the table
 //users - inserts a new playlist with the given room code
-function createPlaylist($db_songs, $db_playlists, $db_users, $username, $name, $roomCode, $skip){
-    $query = "create table if not exists `$roomCode` ( Link varchar(256) not null, Title varchar(50) not null, Upvotes int, Downvotes int, TrackNum int ) ";
+function createPlaylist($db_songs, $db_playlists, $db_users, $username, $name, $skip){
+    $query = "create table if not exists `$name` ( Link varchar(256) not null, Title varchar(50) not null, Upvotes int, Downvotes int, TrackNum int ) ";
     if (!$db_songs->query($query)){
         echo "Error creating playlist '$name': ".$db_songs->error;
         return;
     }
-    $query = "insert into `playlists` values ('$roomCode', '$name', $skip)";
+    $query = "insert into `playlists` values ('$name', $skip)";
     if (!$db_playlists->query($query)){
         echo "Error creating playlist '$name': ".$db_playlists->error;
         return;
     }
-    $query = "insert into `$username` values ('$roomCode')";
+    $query = "insert into `$username` values ('$name')";
     if (!$db_users->query($query)){
         echo "Error creating playlist '$name': ".$db_users->error;
         return;
@@ -67,20 +67,20 @@ function createPlaylist($db_songs, $db_playlists, $db_users, $username, $name, $
 //songs - removes the table with the given room code
 //playlists - removes a playlist with the given room code from the table
 //users - removes a playlist with the given room code
-function removePlaylist($db_songs, $db_playlists, $db_users, $username, $roomCode){
-    $query = "drop table if exists `$roomCode`";
+function removePlaylist($db_songs, $db_playlists, $db_users, $username, $name){
+    $query = "drop table if exists `$name`";
     if (!$db_songs->query($query)){
-        echo "Error removing playlist with room code '$roomCode': ".$db_songs->error;
+        echo "Error removing playlist $name: ".$db_songs->error;
         return;
     }
-    $query = "delete from `playlists` where roomCode=`$roomCode`";
+    $query = "delete from `playlists` where Name=`$name`";
     if (!$db_playlists->query($query)){
-        echo "Error removing playlist with room code '$roomCode': ".$db_playlists->error;
+        echo "Error removing playlist $name: ".$db_playlists->error;
         return;
     }
-    $query = "delete from `$username` where roomCode=`$roomCode`";
+    $query = "delete from `$username` where Name=`$name`";
     if (!$db_users->query($query)){
-        echo "Error removing playlist with room code '$roomCode': ".$db_users->error;
+        echo "Error removing playlist $name: ".$db_users->error;
         return;
     }
 }
@@ -100,8 +100,8 @@ function playlistLength($db_songs, $playlist){
 }
 
 //Returns an array containing all of the rows of the playlist corresponding to the given room code
-function getSongs($db_songs, $roomCode){
-    $query = "select * from `$roomCode` order by TrackNum";
+function getSongs($db_songs, $playlist){
+    $query = "select * from `$playlist` order by TrackNum";
     $result = $db_songs->query($query);
     if ($result){
         $output = array();
@@ -111,43 +111,43 @@ function getSongs($db_songs, $roomCode){
         $result->close();
         return $output;
     }else{
-        echo "Couldn't get songs from $roomCode".$db_songs->error;
+        echo "Couldn't get songs from $playlist".$db_songs->error;
         return array();
     }
 }
 
 //addSong - adds a song to the given playlist
-function addSong($db_songs, $roomCode, $songQuery){
-    $num = playlistLength($db_songs, $roomCode);
+function addSong($db_songs, $playlist, $songQuery){
+    $num = playlistLength($db_songs, $playlist);
     if ($num == -1){
-        echo "Error getting length of playlist $roomCode<br>";
+        echo "Error getting length of playlist $playlist<br>";
         return;
     }
     //Grabs the video title and ID based on the YouTube query passed in to this function
     $api_key = 'AIzaSyBeULimNCbH3fmwTNFBzP2mOFnWqS9Sefo';
-    $api_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q='. 'bts' . '&type=video&fields=items&key=' . $api_key;
+    $api_url = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q='. "$songQuery" . '&type=video&fields=items&key=' . $api_key;
     $searchResultsObject = json_decode(file_get_contents($api_url));
     $videoId = $searchResultsObject->items[0]->id->videoId;
     $videoTitle = $searchResultsObject->items[0]->snippet->title;
-    $query = "insert into `$roomCode` values ('$videoId', '$videoTitle', 0, 0, $num)";
+    $query = "insert into `$playlist` values ('$videoId', '$videoTitle', 0, 0, $num)";
     if (!$db_songs->query($query)){
-        echo "Error adding $title to playlist with room code $roomCode: ".$db_songs->error."<br>";
+        echo "Error adding $songQuery to playlist $playlist: ".$db_songs->error."<br>";
     }
+    return $videoTitle;
 }
 
-//removeSong - removes the song from the given playlist with the given track number
-function removeSong($db_songs, $roomCode, $index){
-    $query = "delete from `$roomCode` where TrackNum=$index";
+//removeSong - removes the song from the given playlist with the given title
+function removeSong($db_songs, $playlist, $name){
+    $query = "delete from `$playlist` where Title='$name'";
     if (!$db_songs->query($query)){
-        echo "Error removing playlist with room code '$roomCode': ".$db_songs->error;
-        return;
+        echo "Error removing playlist $playlist': ".$db_songs->error;
     }
 }
 
 /*-Playlist Methods-*/
 
-//returns the row corresponding to the given room code
-function getPlaylist($db_playlists, $roomCode){
+//returns the row corresponding to the given playlist
+function getPlaylist($db_playlists, $playlist){
     $query = "select * from `playlists`";
     $result = $db_playlists->query($query);
     if ($result){
@@ -192,21 +192,33 @@ function getUserPlaylists($db_users, $username){
 
 //Returns the HTML code for a playlist button with the given name
 function playlistButton($name){
-    return  "<li>
-                <a class='item' href='Currently Playing.php?playlistName=$name'>$name<i class='fa fa-angle-right'></i>
-                </a>
-            </li>";
+    if ($name != "Liked Songs") {
+        return  "
+        <li>
+            <a class='item' href='Currently Playing.php'>$name<i class='fa fa-angle-right'></i>
+            </a>
+        </li>";
+    } else {
+        return "";
+    }
+   
 }
 
 
 //Returns the HTML code for a manage playlist button with the given name
 function managePlaylistButton($name){
-    return  "<li>
-                <a class='icon-button'><i class='fa fa-trash-o' onclick='removePlaylist()' style='font-size:35px; line-height: 35px; vertical-align: center;'></i>
-                </a>
-                <a class='item' href='Currently Playing.php?playlistName=$name'>$name<i class='fa fa-angle-right'></i>
-                </a>
-            </li>";
+    if ($name != "Liked Songs") {
+        return  "
+        <li>
+            <a class='icon-button'><i class='fa fa-trash-o' onclick='removePlaylist()' style='font-size:35px; line-height: 35px; vertical-align: center;'></i>
+            </a>
+            <a class='item' href='Edit Playlist.php?playlistName=$name'>$name<i class='fa fa-angle-right'></i>
+            </a>
+        </li>";
+        } else {
+            return "";
+        }
+    
 }
 
 //Returns the HTML code for all playlists from a given user
@@ -229,17 +241,17 @@ function getManagePlaylistButtons($db_users, $username){
     return $result;
 }
 
+
 function genPage($title, $body){
-    return "
-    <!DOCTYPE html>
+    return "<!DOCTYPE html>
     <html>
-        <head>
-        	<meta name='$title' content='width=device-width, initial-scale=1'>
-        	<link rel = 'stylesheet' type = 'text/css' href = 'style.css'>
-        	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-        </head>
-        <body>
-        $body
+    <head>
+    	<meta name='$title' content='width=device-width, initial-scale=1'>
+    	<link rel = 'stylesheet' type = 'text/css' href = 'style.css'>
+    	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    </head>
+    <body>
+    $body
     </html>";
 }
 

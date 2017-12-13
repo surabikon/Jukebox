@@ -193,7 +193,19 @@ function getUserPlaylists($db_users, $username){
 //Returns the HTML code for a playlist button with the given name
 function playlistButton($name){
     return  "<li>
-                <a class='item' href='Currently Playing.php?playlistName=$name'>$name<i class='fa fa-angle-right'></i></a>
+                <a class='item' href='Currently Playing.php?playlistName=$name'>$name<i class='fa fa-angle-right'></i>
+                </a>
+            </li>";
+}
+
+
+//Returns the HTML code for a manage playlist button with the given name
+function managePlaylistButton($name){
+    return  "<li>
+                <a class='icon-button'><i class='fa fa-trash-o' onclick='removePlaylist()' style='font-size:35px; line-height: 35px; vertical-align: center;'></i>
+                </a>
+                <a class='item' href='Currently Playing.php?playlistName=$name'>$name<i class='fa fa-angle-right'></i>
+                </a>
             </li>";
 }
 
@@ -207,17 +219,27 @@ function getPlaylistButtons($db_users, $username){
     return $result;
 }
 
+//Returns the HTML code for all playlists from a given user
+function getManagePlaylistButtons($db_users, $username){
+    $playlists = getUserPlaylists($db_users, $username);
+    $result = "";
+    foreach ($playlists as &$p){
+        $result .= managePlaylistButton($p);
+    }
+    return $result;
+}
 
 function genPage($title, $body){
-    return "<!DOCTYPE html>
+    return "
+    <!DOCTYPE html>
     <html>
-    <head>
-    	<meta name='$title' content='width=device-width, initial-scale=1'>
-    	<link rel = 'stylesheet' type = 'text/css' href = 'style.css'>
-    	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-    </head>
-    <body>
-    $body
+        <head>
+        	<meta name='$title' content='width=device-width, initial-scale=1'>
+        	<link rel = 'stylesheet' type = 'text/css' href = 'style.css'>
+        	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+        </head>
+        <body>
+        $body
     </html>";
 }
 

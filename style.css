@@ -8,16 +8,20 @@ body {
 	text-align: center;
 }
 
-.fa.fa-home:hover {
+.container.form-list a.icon-button:hover {
   color: #bc8361;
 }
 
-.fa.fa-list:hover {
+.container.item-list a.icon-button:hover {
   color: #bc8361;
 }
 
-.fa.fa-play:hover {
+.container.header i:hover {
   color: #bc8361;
+}
+
+.container.header i {
+  color: #606060;
 }
 
 .container.header h1,
@@ -28,7 +32,7 @@ body {
 .container.header h1 {
 	font-size: 50px;
   font-family: 'Codystar';
-  padding-top: 5%;
+  padding-top: 2%;
 }
 
 .container.header h2 {
@@ -42,6 +46,7 @@ body {
 	width: 100%;
 	display: block;
 	margin: 0 auto;
+  max-height: 200px;
 }
 
 .container.list ul {
@@ -142,10 +147,18 @@ body {
 	color: #606060;
 }
 
+.container.nav i:hover {
+  color: #bc8361;
+}
+
 .container.topnav i {
   font-size: 40px;
   padding: 15px;
   color: #606060;
+}
+
+.container.topnav i:hover {
+  color: #bc8361;
 }
 
 .container.topnavtext {
@@ -281,11 +294,6 @@ p {
 	width: 60%;
 }
 
-.glyphicon-move {
-  cursor: move;
-  cursor: -webkit-grabbing;
-}
-
 #sortable-1 {
   list-style-type: none;
   margin: 0; 
@@ -334,7 +342,8 @@ p {
 }
 
 .container.item-list a.icon-button {
-  top: 12px;
+  /*top: 12px;*/
   position: absolute;
-  right: -30px;
+  left: -35px;
+  color: #606060;
 }

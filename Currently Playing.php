@@ -90,23 +90,6 @@ $body = <<<BODY
                 }
 
                 function onPlayerReady(event) {
-                    // player.loadPlaylist({
-                    //     'list': 'PLnsTUgMW5W__4eI0349Lu64ljXsrRjhwJ',
-                    //     'listType': 'playlist',
-                    //     'index': 0,
-                    //     'startSeconds': 0,
-                    //     'suggestedQuality': 'hd1080'
-                    // });
-
-                    // player.loadPlaylist({
-                    //     listType: 'playlist',
-                    //     list: 'PLnsTUgMW5W__4eI0349Lu64ljXsrRjhwJ',
-                    //     // list:['a8c5wmeOL9o', '2lzXpOF5Ssg'],
-                    //     index: 0,
-                    //     startSeconds: 0,
-                    //     suggestedQuality: 'small'
-                    // });
-
                     player.loadVideoById(videoList[count]);
                     player.setPlaybackQuality("small");
                     document.getElementById("youtube-audio").style.display = "inline-block";
@@ -123,7 +106,7 @@ $body = <<<BODY
 
             	var songCount = 0;
                 function addSong(){
-                    var song = prompt("URL:", "Enter YouTube URL");
+                    var song = prompt("Song Name or URL:", "Enter Song Name or URL");
                     addNewSong(song);
                 }
 
@@ -152,7 +135,7 @@ $body = <<<BODY
                         upIcon.className="fa fa-angle-double-up";
                         upIcon.style="color: black; font-size: 35px; position: absolute; right: 10px; line-height: 50px;";
                         upIcon.id = "up" + currCount;
-                        upIcon.onclick = function() {toggleColor(upIcon, "green")};
+                        upIcon.onclick = function() {toggleColor(upIcon, "#0bf406")};
                         box.appendChild(upIcon);
 
                         var downIcon = document.createElement('i');
@@ -197,7 +180,8 @@ $body = <<<BODY
 
 			<section class="container header">
 				<h1>JUKEBOX</h1>
-				<h2>Currently Playing - $pName</h2>
+				<h2>Currently Playing</h2>
+                <h2>Room Code: XXXXXX</h2>
 			</section>
 
            	<section class="container list item-list">
@@ -211,7 +195,7 @@ $body = <<<BODY
 
             <section class="container header">
                 <h2>Up Next
-                <a href="#"><i class="fa fa-plus-square-o" onclick=addSong() style="color: #606060; font-size: 40px;"></i>
+                <a href="#"><i class="fa fa-plus-square-o" onclick=addSong() style="font-size: 40px;"></i>
                 </a>
                 </h2>
             </section>
@@ -222,15 +206,14 @@ $body = <<<BODY
             </section>
         	</br>
 
-            <h2> Room Code: XXXXXX </h2>
 
-                <section class="container nav">
-                    <center>
-                        <a class="icon" href="Home.html"><i class="fa fa-home"></i></a>
-                        <a class="icon" href="Playlists.php"><i class="fa fa-list"></i></a>
-                        <a class="icon" href="Currently Playing.php"><i class="fa fa-play" style="color: #FFFFFF;"></i></a>
-                    </center>
-                </section>
+            <section class="container nav">
+                <center>
+                    <a class="icon" href="Home.html"><i class="fa fa-home"></i></a>
+                    <a class="icon" href="Manage Playlists.php"><i class="fa fa-list"></i></a>
+                    <a class="icon" href="Currently Playing.php"><i class="fa fa-play" style="color: #FFFFFF;"></i></a>
+                </center>
+            </section>
         </body>
     </html>
 BODY;

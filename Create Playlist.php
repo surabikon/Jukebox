@@ -94,19 +94,16 @@
 
 		<section class="container list form-list">
 			<ul>
-				<form action="/action_page.php">
+				<form>
 				<li>
 					<label>Name:</label>
 					<input type="text" placeholder="Enter Playlist Name">
-					<a class="icon-button" onclick="removePlaylist()">
-                        <i class="fa fa-trash-o"></i>
-                    </a>
 				</li>
 				</form>
-				<form action="/action_page.php">
+				<form>
 				<li>
-					<label>URL:</label>
-					<input type="text" placeholder="Enter Youtube URL">
+					<label>Song Name/URL:</label>
+					<input type="text" placeholder="Enter Song Name or URL">
 					<a class="icon-button" onclick="addNewSong()">
                         <i class="fa fa-plus-square-o"></i>
                     </a>
@@ -122,13 +119,13 @@
 
 		<section class="container nav">
 			<center style="background-color: #D0EAFF; padding-bottom: 10px; padding-top: 10px;">
-				<a href="Playlists.php"><i class="fa fa-check-circle-o" style="font-size: 40px; "></i></a>
-				<a href="Playlists.php"><i class="fa fa-times-circle-o" style="font-size: 40px; padding-left:20px"></i></a>
+				<a href="Manage Playlists.php"><i class="fa fa-check-circle-o" style="font-size: 40px; "></i></a>
+				<a href="Manage Playlists.php"><i class="fa fa-times-circle-o" style="font-size: 40px; padding-left:20px"></i></a>
 			</center>
 
 			<center>
 				<a class="icon" href="Home.html"><i class="fa fa-home"></i></a>
-				<a class="icon" href="Playlists.php"><i class="fa fa-list"></i></a>
+				<a class="icon" href="Manage Playlists.php"><i class="fa fa-list"></i></a>
 				<a class="icon" href="Currently Playing.php"><i class="fa fa-play"></i></a>
 			</center>
 		</section>

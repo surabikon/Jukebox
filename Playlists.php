@@ -44,10 +44,15 @@ $bottom = <<<BOTTOM
 				</ul>
 			</section>
 
+			<section class="container header">
+                <a class="icon" href="Create Playlist.php"><i class="fa fa-plus-square-o" onclick=addSong() style="font-size: 50px; padding-bottom: 100px;"></i>
+                </a>
+            </section>
+
 			<section class="container list item-list">
 				<ul>
 					<li>
-						<a class="item" href="Edit Playlist.php">Liked Songs<i class="fa fa-angle-right"></i></a>
+						<a class="item" href="Currently Playing.php?playlistName=XXXXXX">Liked Songs<i class="fa fa-angle-right"></i></a>
 					</li>
 				</ul>
 			</section>
@@ -55,7 +60,7 @@ $bottom = <<<BOTTOM
 			<section class="container nav">
 				<center>
 					<a class="icon" href="Home.html"><i class="fa fa-home" ></i></a>
-					<a class="icon" href="Playlists.php"><i class="fa fa-list" style="color: #FFFFFF;"></i></a>
+					<a class="icon" href="Manage Playlists.php"><i class="fa fa-list" style="color: #FFFFFF;"></i></a>
 					<a class="icon" href="Currently Playing.php"><i class="fa fa-play"></i></a>
 				</center>
 			</section>

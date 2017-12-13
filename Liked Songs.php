@@ -111,27 +111,7 @@ $body = <<<BODY
 
 		<section class="container header">
 			<h1>JUKEBOX</h1>
-			<h2>Edit Playlist</h2>
-		</section>
-
-		<section class="container list form-list">
-			<ul>
-				<form>
-				<li>
-					<label>Playlist Name:</label>
-					<input type="text" placeholder="Enter Song Title" value=$pName>
-				</li>
-				</form>
-				<form>
-				<li>
-					<label>Song/URL:</label>
-					<input type="text" placeholder="Enter Song Name or URL">
-					<a class="icon-button" onclick="addNewSong()">
-	                    <i class="fa fa-plus-square-o"></i>
-	            	</a>
-				</li>
-				</form>
-			</ul>
+			<h2>Liked Songs</h2>
 		</section>
 
 		<section class="container list item-list">

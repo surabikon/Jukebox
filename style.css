@@ -26,7 +26,7 @@ body {
 
 .container.header h1,
 .container.header h2 {
-	text-align: center;	
+	text-align: center;
 }
 
 .container.header h1 {
@@ -213,14 +213,14 @@ p {
   width: 87%;
   max-width: 500px;
   line-height: 50px;
-  
+
   border: 2px solid white;
   border-radius: 6px;
   background-color: black;
 
   padding: 0px 15px;
   margin: 3px;
-  
+
   font-family: 'Marvel';
   color: white;
 
@@ -242,22 +242,22 @@ p {
   min-width: 200px;
   max-width: 500px;
   line-height: 50px;
-  
+
   border: 2px solid white;
   border-radius: 6px;
   background-color: #141f1f;
 
   padding: 0px 15px;
   margin: 3px;
-  
+
   font-family: 'Marvel';
   color: white;
 
   text-align: left;
   text-decoration: none;
-  display: inline-block;   
+  display: inline-block;
  }
-  
+
 .vertical-menu {
   height: 230px;
 	overflow-y: auto;
@@ -293,27 +293,14 @@ p {
 	width: 60%;
 }
 
-#sortable-1 {
-  list-style-type: none;
-  margin: 0; 
-  padding: 0;
-  width: 100%;
-}
-
-#sortable-1 li {
-  margin: 0 3px 3px 3px;
-  font-size: 20px;
-  height: 50px;
-}
-
 #addNew {
   list-style-type: none;
-  margin: 0; 
+  margin: 0;
   padding: 0;
   width: 100%;
   min-height: 200px;
   max-height: 400px;
-  overflow-y: scroll; 
+  overflow-y: scroll;
 }
 
 #addNew li {

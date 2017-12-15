@@ -64,7 +64,7 @@
 
 			function removePlaylist() {
 				if (confirm("Are you sure you want to delete this playlist?")) {
-					window.location.href = "Home.html"
+					window.location.href = "Home.php"
 					//will remove all instances of playlist
 				}
 			}
@@ -79,7 +79,7 @@
 						Username
 					</section>
 				</i></a>
-				<a class="icon" href="Login.html" style="position: fixed; right: 0;"><i class="fa fa-sign-out">
+				<a class="icon" href="Login.php" style="position: fixed; right: 0;"><i class="fa fa-sign-out">
 					<section class="container topnavtext">
 						Logout
 					</section>
@@ -124,7 +124,7 @@
 			</center>
 
 			<center>
-				<a class="icon" href="Home.html"><i class="fa fa-home"></i></a>
+				<a class="icon" href="Home.php"><i class="fa fa-home"></i></a>
 				<a class="icon" href="Manage Playlists.php"><i class="fa fa-list"></i></a>
 				<a class="icon" href="Currently Playing.php"><i class="fa fa-play"></i></a>
 			</center>

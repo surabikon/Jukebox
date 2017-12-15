@@ -23,6 +23,7 @@ $body = <<<BODY
 			<link href='https://fonts.googleapis.com/css?family=Lobster Two' rel='stylesheet'>
 			<link href='https://fonts.googleapis.com/css?family=Marvel' rel='stylesheet'>
 		</head>
+		
 		<body>
 			<section class="container topnav">
 				<center>
@@ -43,15 +44,6 @@ $body = <<<BODY
 				<h1>JUKEBOX</h1>
 				<h2>Playlist</h2>
 			</section>
-
-			<section class="container list item-list">
-				<ul>
-					<li>
-						<a class="item" href="Liked Songs.php">Liked Songs<i class="fa fa-angle-right"></i></a>
-					</li>
-				</ul>
-			</section>
-
 			<section class="container list item-list">
 				<ul>
 					$playlists
@@ -62,6 +54,15 @@ $body = <<<BODY
                 <a class="icon" href="Create Playlist.php"><i class="fa fa-plus-square-o" onclick=addSong() style="font-size: 50px; padding-bottom: 100px;"></i>
                 </a>
             </section>
+
+			<section class="container list item-list">
+				<ul>
+				<li>
+					<a class='item' href='Liked Songs.php'>Liked Songs<i class='fa fa-angle-right'></i>
+					</a>
+				</li>
+				</ul>
+			</section>
 
 			<section class="container nav">
 				<center>

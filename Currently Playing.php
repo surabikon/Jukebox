@@ -15,13 +15,12 @@ if (isset($_GET["playlistName"])){
 	$pName = $_GET["playlistName"];
 	$top = "
     <li>
-        <div data-video='' data-autoplay='0' data-loop='1' id='youtube-audio'></div>
+        <div>Add Songs to Get Started</div>
     </li>";
 	$code = "emptyparty";
-} else {
+}else{
 	$pName = "Best of Kendrick Lamar";
-	$top = "
-    <li>
+	$top = "<li>
 		<div data-video='pCdWnY4Dn2w' data-autoplay='1' data-loop='1' id='youtube-audio'></div>
 		<span>Kendrick Lamar- DUCKWORTH.</span>
 	</li>";

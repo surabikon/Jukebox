@@ -5,16 +5,25 @@
     $db_playlists = connectPlaylists();
     $db_users = connectUsers();
 
-    $query = "create table if not exists `playlists` ( RoomCode varchar(256) not null, Name varchar(256) not null, Skip int ) ";
+    $query = "create table if not exists `playlists` ( Name varchar(256) not null, Skip int ) ";
     if (!$db_playlists->query($query)){
         echo "Error creating playlist playlist: ".$db_playlists->error;
         return;
     }
-    
-    // createPlaylist($db_songs, $db_playlists, $db_users, "test", "Hello", "XXXXXX", 0);
 
-    // addUser($db_users, "test");
+    session_start();
 
-    addSong($db_songs, "XXXXXX", "https://www.youtube.com/watch?v=tvTRZJ-4EyI");
+    if (isset($_GET["setuser"])){
+        $_SESSION['username'] = $_GET["setuser"];
+    }
+
+     // createPlaylist($db_songs, $db_playlists, $db_users, "test", "Best of Kendrick Lamar", 50);
+
+     // addUser($db_users, "test");
+
+    //addSong($db_songs, "Best of Kendrick Lamar", "duckworth");
+    //addSong($db_songs, "Best of Kendrick Lamar", "YAH");
+    //addSong($db_songs, "Best of Kendrick Lamar", "alright");
+    //addSong($db_songs, "Best of Kendrick Lamar", "humble");
 
 ?>

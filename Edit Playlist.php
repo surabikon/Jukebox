@@ -1,8 +1,16 @@
 <?php
 require("methods.php");
+
+session_start();
+if (!isset($_SESSION['username'])) {
+	$username = "Test Username";
+} else {
+	$username = $_SESSION['username'];
+}
+
 $onload = "";
 $db_songs = connectSongs();
-if ($_GET["playlistName"]){
+if (isset($_GET["playlistName"])){
 	$pName = $_GET["playlistName"];
 }else{
 	$pName = "XXXXXX";
@@ -32,9 +40,9 @@ $body = <<<BODY
 
 		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 		<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<script>
 			$(function() {
-				$( "#sortable-1" ).sortable();
 				$( "#addNew" ).sortable();
 			});
 		</script>
@@ -45,6 +53,33 @@ $body = <<<BODY
 		</script>
 		<script>
 			var songCount = 0;
+
+			function addSong(){
+				var song = document.getElementById('songentry').value;
+				ajaxAdd(song);
+			}
+
+			function ajaxAdd(name){
+				$.ajax({
+					url: 'ajaxAdd.php',
+			        type: 'post',
+			        data: { songname: '' + name, roomcode: '$pName'},
+					success: function(data){
+						addNewSong(data);
+					}
+         		});
+			}
+
+			function ajaxRemove(name){
+				$.ajax({
+					url: 'ajaxRemove.php',
+			        type: 'post',
+			        data: { songname: '' + name, roomcode: '$pName'},
+					success: function(data){
+						alert(data);
+					}
+         		});
+			}
 
 			function addNewSong(songName) {
 				songCount = songCount + 1;
@@ -65,7 +100,7 @@ $body = <<<BODY
 				close.className = "fa fa-close";
 				close.style = "position: absolute; right: 20px; line-height: 50px";
 				close.id = "delete";
-				close.onclick = function() {removeSong(currCount)};
+				close.onclick = function() {removeSong(currCount, songName)};
 
 				box.appendChild(close);
 				listItem.appendChild(icon);
@@ -74,7 +109,7 @@ $body = <<<BODY
 				element.appendChild(listItem);
 			}
 
-			function removeSong(songCount) {
+			function removeSong(songCount, songName) {
 				var parent = document.getElementById("addNew");
 
 				var child = document.getElementById("song"+ songCount);
@@ -82,11 +117,13 @@ $body = <<<BODY
 
 				parent.removeChild(child);
 				parent.removeChild(iconChild);
+
+				ajaxRemove(songName);
 			}
 
 			function removePlaylist() {
 				if (confirm("Are you sure you want to delete this playlist?")) {
-					window.location.href = "Manage Playlists.php"
+					window.location.href = "Playlists.php"
 					//will also later remove all instances of playlist
 				}
 			}
@@ -96,12 +133,12 @@ $body = <<<BODY
 	<body>
 		<section class="container topnav">
 			<center>
-				<a class="icon" style="position: fixed; left: 0;"><i class="fa fa-user-circle-o" style="color: black;">
+				<a class="icon" href="Home.php" style="position: fixed; left: 0;"><i class="fa fa-user-circle-o">
 					<section class="container topnavtext">
-						Username
+						$username
 					</section>
 				</i></a>
-				<a class="icon" href="Login.html" style="position: fixed; right: 0;"><i class="fa fa-sign-out">
+				<a class="icon" href="Home.php" style="position: fixed; right: 0;"><i class="fa fa-sign-out">
 					<section class="container topnavtext">
 						Logout
 					</section>
@@ -116,17 +153,19 @@ $body = <<<BODY
 
 		<section class="container list form-list">
 			<ul>
-				<form>
+				<form action="/action_page.php">
 				<li>
 					<label>Playlist Name:</label>
-					<input type="text" placeholder="Enter Song Title" value=$pName>
+					<input type="text" placeholder="Enter Song Title" value="$pName">
+					<a class="icon-button" onclick="removePlaylist()">
+	                </a>
 				</li>
 				</form>
-				<form>
+				<form action="/action_page.php">
 				<li>
 					<label>Song/URL:</label>
-					<input type="text" placeholder="Enter Song Name or URL">
-					<a class="icon-button" onclick="addNewSong()">
+					<input type="text" id='songentry' placeholder="Enter Song Name or URL">
+					<a class="icon-button" onclick="addSong()">
 	                    <i class="fa fa-plus-square-o"></i>
 	            	</a>
 				</li>
@@ -146,7 +185,7 @@ $body = <<<BODY
 			</center>
 
 			<center>
-				<a class="icon" href="Home.html"><i class="fa fa-home"></i></a>
+				<a class="icon" href="Home.php"><i class="fa fa-home"></i></a>
 				<a class="icon" href="Manage Playlists.php"><i class="fa fa-list"></i></a>
 				<a class="icon" href="Currently Playing.php"><i class="fa fa-play"></i></a>
 			</center>

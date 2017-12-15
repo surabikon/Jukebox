@@ -192,33 +192,27 @@ function getUserPlaylists($db_users, $username){
 
 //Returns the HTML code for a playlist button with the given name
 function playlistButton($name){
-    if ($name != "Liked Songs") {
-        return  "
-        <li>
-            <a class='item' href='Currently Playing.php'>$name<i class='fa fa-angle-right'></i>
-            </a>
-        </li>";
-    } else {
+    if ($name == "Liked Songs"){
         return "";
     }
-   
+    return  "<li>
+                <a class='item' href='Currently Playing.php'>$name<i class='fa fa-angle-right'></i>
+                </a>
+            </li>";
 }
 
 
 //Returns the HTML code for a manage playlist button with the given name
 function managePlaylistButton($name){
-    if ($name != "Liked Songs") {
-        return  "
-        <li>
-            <a class='icon-button'><i class='fa fa-trash-o' onclick='removePlaylist()' style='font-size:35px; line-height: 35px; vertical-align: center;'></i>
-            </a>
-            <a class='item' href='Edit Playlist.php?playlistName=$name'>$name<i class='fa fa-angle-right'></i>
-            </a>
-        </li>";
-        } else {
-            return "";
-        }
-    
+    if ($name == "Liked Songs"){
+        return "";
+    }
+    return  "<li>
+                <a class='icon-button'><i class='fa fa-trash-o' onclick='removePlaylist()' style='font-size:35px; line-height: 35px; vertical-align: center;'></i>
+                </a>
+                <a class='item' href='Edit Playlist.php?playlistName=$name'>$name<i class='fa fa-angle-right'></i>
+                </a>
+            </li>";
 }
 
 //Returns the HTML code for all playlists from a given user

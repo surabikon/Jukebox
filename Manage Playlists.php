@@ -8,10 +8,10 @@ if (!isset($_SESSION['username'])) {
 	$username = $_SESSION['username'];
 }
 
-$db_users = connectUsers();
-$playlists = getManagePlaylistButtons($db_users, "test");
+$db_playlists = connectPlaylists();
+$playlists = getManagePlaylistButtons($db_playlists, "test");
 
-$db_users->close();
+$db_playlists->close();
 
 $body = <<<BODY
 	<!DOCTYPE html>
@@ -22,7 +22,7 @@ $body = <<<BODY
 			<link href='https://fonts.googleapis.com/css?family=Codystar' rel='stylesheet'>
 			<link href='https://fonts.googleapis.com/css?family=Lobster Two' rel='stylesheet'>
 			<link href='https://fonts.googleapis.com/css?family=Marvel' rel='stylesheet'>
-			
+
 			<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 			<script>
 			function addPlaylist(){
@@ -37,9 +37,19 @@ $body = <<<BODY
 				});
 
 			}
+
+			function ajaxRemove(name){
+				$.ajax({
+					url: 'ajaxRemovePlaylist.php',
+					type: 'post',
+					data: { name: '' + name},
+					success: function(data){
+						window.location.href = 'Manage Playlists.php';
+					}
+				});
+			}
 			</script>
 		</head>
-
 		<body>
 			<section class="container topnav">
 				<center>
@@ -60,6 +70,7 @@ $body = <<<BODY
 				<h1>JUKEBOX</h1>
 				<h2>Playlist</h2>
 			</section>
+			
 			<section class="container list item-list">
 				<ul>
 					$playlists
@@ -92,6 +103,5 @@ $body = <<<BODY
 		</body>
 BODY;
 
-// echo genPage("Playlists", $top.$playlists.$bottom);
 echo genPage("Playlists", $body);
 ?>

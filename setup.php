@@ -11,19 +11,19 @@
         return;
     }
 
+    addUser($db_users, "test");
+
     session_start();
 
     if (isset($_GET["setuser"])){
         $_SESSION['username'] = $_GET["setuser"];
     }
 
-     // createPlaylist($db_songs, $db_playlists, $db_users, "test", "Best of Kendrick Lamar", 50);
+    createPlaylist($db_songs, $db_playlists, $db_users, "test", "Best of Kendrick Lamar", 50);
 
-     // addUser($db_users, "test");
-
-    //addSong($db_songs, "Best of Kendrick Lamar", "duckworth");
-    //addSong($db_songs, "Best of Kendrick Lamar", "YAH");
-    //addSong($db_songs, "Best of Kendrick Lamar", "alright");
-    //addSong($db_songs, "Best of Kendrick Lamar", "humble");
+    addSong($db_songs, "Best of Kendrick Lamar", "duckworth");
+    addSong($db_songs, "Best of Kendrick Lamar", "YAH");
+    addSong($db_songs, "Best of Kendrick Lamar", "alright");
+    addSong($db_songs, "Best of Kendrick Lamar", "humble");
 
 ?>

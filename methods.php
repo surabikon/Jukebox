@@ -71,17 +71,14 @@ function removePlaylist($db_songs, $db_playlists, $db_users, $username, $name){
     $query = "drop table if exists `$name`";
     if (!$db_songs->query($query)){
         echo "Error removing playlist $name: ".$db_songs->error;
-        return;
     }
-    $query = "delete from `playlists` where Name=`$name`";
+    $query = "delete from `playlists` where Name='$name'";
     if (!$db_playlists->query($query)){
         echo "Error removing playlist $name: ".$db_playlists->error;
-        return;
     }
-    $query = "delete from `$username` where Name=`$name`";
+    $query = "delete from `$username` where Name='$name'";
     if (!$db_users->query($query)){
         echo "Error removing playlist $name: ".$db_users->error;
-        return;
     }
 }
 
@@ -174,9 +171,9 @@ function addUser($db_users, $username){
 }
 
 //returns an array of all of the room codes of the user's playlists
-function getUserPlaylists($db_users, $username){
-    $query = "select * from `$username`";
-    $result = $db_users->query($query);
+function getUserPlaylists($db_playlists, $username){
+    $query = "select * from `playlists`";
+    $result = $db_playlists->query($query);
     if ($result){
         $output = array();
         while($row = mysqli_fetch_row($result)){
@@ -185,7 +182,7 @@ function getUserPlaylists($db_users, $username){
         $result->close();
         return $output;
     }else{
-        echo "Couldn't get playlists from database".$db_users->error;
+        echo "Couldn't get playlists from database".$db_playlists->error;
         return array();
     }
 }
@@ -208,7 +205,7 @@ function managePlaylistButton($name){
         return "";
     }
     return  "<li>
-                <a class='icon-button'><i class='fa fa-trash-o' onclick='removePlaylist()' style='font-size:35px; line-height: 35px; vertical-align: center;'></i>
+                <a class='icon-button'><i class='fa fa-trash-o' onclick='ajaxRemove(`$name`)' style='font-size:35px; line-height: 35px; vertical-align: center;'></i>
                 </a>
                 <a class='item' href='Edit Playlist.php?playlistName=$name'>$name<i class='fa fa-angle-right'></i>
                 </a>
@@ -237,15 +234,16 @@ function getManagePlaylistButtons($db_users, $username){
 
 
 function genPage($title, $body){
-    return "<!DOCTYPE html>
+    return "
+    <!DOCTYPE html>
     <html>
-    <head>
-    	<meta name='$title' content='width=device-width, initial-scale=1'>
-    	<link rel = 'stylesheet' type = 'text/css' href = 'style.css'>
-    	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-    </head>
-    <body>
-    $body
+        <head>
+            <meta name='$title' content='width=device-width, initial-scale=1'>
+            <link rel = 'stylesheet' type = 'text/css' href = 'style.css'>
+            <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+        </head>
+        <body>
+        $body
     </html>";
 }
 

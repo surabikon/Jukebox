@@ -8,10 +8,10 @@ if (!isset($_SESSION['username'])) {
 	$username = $_SESSION['username'];
 }
 
-$db_users = connectUsers();
-$playlists = getPlaylistButtons($db_users, "test");
+$db_playlists = connectPlaylists();
+$playlists = getPlaylistButtons($db_playlists, "test");
 
-$db_users->close();
+$db_playlists->close();
 
 $body = <<<BODY
 	<!DOCTYPE html>
@@ -23,7 +23,7 @@ $body = <<<BODY
 			<link href='https://fonts.googleapis.com/css?family=Lobster Two' rel='stylesheet'>
 			<link href='https://fonts.googleapis.com/css?family=Marvel' rel='stylesheet'>
 		</head>
-		
+
 		<body>
 			<section class="container topnav">
 				<center>
@@ -44,6 +44,7 @@ $body = <<<BODY
 				<h1>JUKEBOX</h1>
 				<h2>Playlist</h2>
 			</section>
+			
 			<section class="container list item-list">
 				<ul>
 					$playlists
@@ -74,6 +75,5 @@ $body = <<<BODY
 		</body>
 BODY;
 
-// echo genPage("Playlists", $top.$playlists.$bottom);
 echo genPage("Playlists", $body);
 ?>
